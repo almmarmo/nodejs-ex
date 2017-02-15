@@ -11,14 +11,14 @@
             crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.js"></script>
     <script src="/socket.io/socket.io.js"></script>
-    <script src="/js/bricks.js"></script>
+    <script src="/js/config.js"></script>
 </head>
-<body ng-app="twitterBricks" ng-controller="BricksController">
+<body ng-app="twitterBricks" ng-controller="ConfigController">
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <br />
         <div class="container">
             <div class="col-md-10">
-                <span ng-bind="{{hash}}"></span>
+                <input ng-model="hashTag" type="text" id="text-hashtag" class="form-control" placeholder="Digite a hastag que quer visualizar. Ex: #twitter" />
             </div>
             <div class="col-md-2">
                 <button id="button-startstop" class="btn btn-primary btn-lg" ng-click="clickStartStop()">{{buttonStartStopText}}</button>
