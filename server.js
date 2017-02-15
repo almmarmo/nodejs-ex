@@ -12,14 +12,15 @@ var keys = require('./keys');
 var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
     ip = process.env.IP || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0';
 
-server.listen(port,ip);
 app.use(express.static(path.join(__dirname, 'static')));
 app.use(bodyParser());
 
 app.get('/', function (req, res) {
     res.sendFile(__dirname + "/views/index.html");
 });
-
+app.get('/config', function (req, res) {
+    res.sendFile(__dirname + "/views/config.html");
+});
 
 var T = new Twit({
     consumer_key: keys.consumer_key,
@@ -27,8 +28,6 @@ var T = new Twit({
     access_token: keys.access_token,
     access_token_secret: keys.access_token_secret,
 });
-
-
 
 io.sockets.on('connection', function (socket) {
     console.log('Socket.io connected');
@@ -53,3 +52,4 @@ io.sockets.on('connection', function (socket) {
 
 });
 
+server.listen(port, ip);
