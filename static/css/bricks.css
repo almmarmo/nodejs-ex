@@ -1,0 +1,35 @@
+﻿.container{
+    margin-left: 0;
+    margin-right: 0;
+}
+.tweetli {
+    position: relative;
+    width: 320px;
+    height: 150px;
+    background: #567E3A;
+    display: inline-block;
+    margin: 0 2% 2% 0;
+    border-radius: 2px;
+    color: #fafafa;
+}
+
+    .tweetli img {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        width: 90px;
+        border: 2px solid #cdcdcd;
+    }
+
+    .tweetli .message {
+        top: 50px;
+        width: 210px;
+        height: 80px;
+        text-align: left;
+    }
+
+    .tweetli .name, .tweetli .message {
+        position: absolute;
+        left: 105px;
+        overflow: hidden;
+    }
