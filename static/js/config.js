@@ -24,6 +24,7 @@ app.controller("ConfigController", function ($scope) {
                 hash: $scope.hashTag
             });
             $scope.buttonStartStopText = "Stop";
+            $("#thewall").empty();
         }
         else {
             socket.emit("stoptwit");
