@@ -1,7 +1,7 @@
 ﻿var app = angular.module('twitterBricks', []);
 
 app.controller("BricksController", function ($scope) {
-    $scope.buttonStartStopText = "Start";
+    $scope.buttonStartStopText = "Stop";
     $scope.hash = '';
     var url = "http://nodejs-project122.44fs.preview.openshiftapps.com/";
     //var url = "http://localhost:5000";
@@ -27,7 +27,7 @@ app.controller("BricksController", function ($scope) {
             $scope.buttonStartStopText = "Stop";
         }
         else {
-            socket.removeAllListeners("hash");
+            socket.removeAllListeners("stream");
             $scope.buttonStartStopText = "Start";
         }
     }
