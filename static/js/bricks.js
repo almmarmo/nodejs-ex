@@ -32,5 +32,9 @@ app.controller("BricksController", function ($scope) {
         }
     }
 
+    $scope.clickClear = function () {
+        $("#thewall").empty();
+    }
+
     init();
 });

@@ -18,10 +18,13 @@
         <br />
         <div class="container">
             <div class="col-md-10">
-                <span ng-bind="{{hash}}"></span>
+                Hashtag: <span ng-model="{{hash}}" class="text-warning"></span>
             </div>
             <div class="col-md-2">
                 <button id="button-startstop" class="btn btn-primary btn-lg" ng-click="clickStartStop()">{{buttonStartStopText}}</button>
+            </div>
+            <div class="col-md-2">
+                <button id="button-startstop" class="btn btn-primary btn-lg" ng-click="clickClear()">Clear</button>
             </div>
         </div>
     </nav>
