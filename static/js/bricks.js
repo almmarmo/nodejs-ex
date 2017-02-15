@@ -8,8 +8,12 @@ app.controller("BricksController", function ($scope) {
     var socket = io.connect(url);
 
     function init() {
+        startStream();
+    }
+    function startStream()
+    {
         socket.on("stream", function (tweet) {
-            $("#thewall").prepend('<li class="tweetli"><a href="http://www.twitter.com/'+tweet.username+'" target="_blank"><img src="' + tweet.icon + '" alt="" /></a><div class="name">' + tweet.name + ' (@' + tweet.username + ')</div><div class="message">' + tweet.text + '</div></li>');
+            $("#thewall").prepend('<li class="tweetli"><a href="http://www.twitter.com/' + tweet.username + '" target="_blank"><img src="' + tweet.icon + '" alt="" /></a><div class="name">' + tweet.name + ' (@' + tweet.username + ')</div><div class="message">' + tweet.text + '</div></li>');
             //$(".list").html(tweet.hash);
             $scope.hash = tweet.hash;
 
@@ -21,6 +25,7 @@ app.controller("BricksController", function ($scope) {
 
     $scope.clickStartStop = function () {
         if ($scope.buttonStartStopText == "Start") {
+            startStream();
             socket.emit("hash", {
                 hash: $scope.hashTag
             });
