@@ -21,31 +21,38 @@ app.get('/', function (req, res) {
 app.get('/config', function (req, res) {
     res.sendFile(__dirname + "/views/config.html");
 });
+var error = false;
+try {
+    var T = new Twit({
+        consumer_key: keys.consumer_key,
+        consumer_secret: keys.consumer_secret,
+        access_token: keys.access_token,
+        access_token_secret: keys.access_token_secret,
+    });
+} catch (e) {
+    console.log(e.message);
+    error = true;
+}
 
-var T = new Twit({
-    consumer_key: keys.consumer_key,
-    consumer_secret: keys.consumer_secret,
-    access_token: keys.access_token,
-    access_token_secret: keys.access_token_secret,
-});
 
 io.sockets.on('connection', function (socket) {
     console.log('Socket.io connected');
 
     socket.on('hash', function (hash) {
-        console.log('hash called');
-        var streamHash = hash.hash;//, locations: '-51.92528,-14.235004'
-        var stream = T.stream('statuses/filter', { track: streamHash });
+        if (!error) { 
+            var streamHash = hash.hash;//, locations: '-51.92528,-14.235004'
+            var stream = T.stream('statuses/filter', { track: streamHash });
 
-        stream.on('tweet', function (tweet) {
-            console.log('tweeted');
-            io.sockets.emit('stream', { text: tweet.text, name: tweet.user.name, username: tweet.user.screen_name, icon: tweet.user.profile_image_url, hash: streamHash });
-        });
+            stream.on('tweet', function (tweet) {
+                console.log('tweeted');
+                io.sockets.emit('stream', { text: tweet.text, name: tweet.user.name, username: tweet.user.screen_name, icon: tweet.user.profile_image_url, hash: streamHash });
+            });
 
-        socket.on('stoptwit', function (socket) {
-            console.log('stop called');
-            stream.stop();
-        });
+            socket.on('stoptwit', function (socket) {
+                console.log('stop called');
+                stream.stop();
+            });
+        }
     });
 
 
