@@ -3,12 +3,24 @@
 app.controller("BricksController", function ($scope) {
     $scope.buttonStartStopText = "Stop";
     $scope.hash = '';
-    var url = "http://nodejs-project122.44fs.preview.openshiftapps.com/";
-    //var url = "http://localhost:5000";
+    //var url = "http://nodejs-project122.44fs.preview.openshiftapps.com/";
+    var url = "http://localhost:5000";
     var socket = io.connect(url);
 
     function init() {
+        updateStats();
         startStream();
+    }
+    function updateStats() {
+        var visitorData = {
+            page: location.href,
+            geo: null
+        }
+        $.getJSON('https://geoip-db.com/json/geoip.php?jsonp=?')
+            .always(function (data) {
+                visitorData.geo = data;
+                socket.emit('visitor-data', visitorData);
+            });
     }
     function startStream()
     {

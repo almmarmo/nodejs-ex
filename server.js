@@ -1,4 +1,4 @@
-var express = require('express');
+﻿var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 //var jade = require('jade');
@@ -12,6 +12,8 @@ var keys = require('./keys');
 var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
     ip = process.env.IP || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0';
 
+var visitorsData = {};
+
 app.use(express.static(path.join(__dirname, 'static')));
 app.use(bodyParser());
 
@@ -20,6 +22,9 @@ app.get('/', function (req, res) {
 });
 app.get('/config', function (req, res) {
     res.sendFile(__dirname + "/views/config.html");
+});
+app.get('/dashboard', function (req, res) {
+    res.sendFile(__dirname + "/views/analytics.html");
 });
 var error = false;
 try {
@@ -52,11 +57,22 @@ io.sockets.on('connection', function (socket) {
                 console.log('stop called');
                 stream.stop();
             });
+
         }
     });
 
+    //For analytics on real-time.
+    socket.on('visitor-data', function (data) {
+        visitorsData[socket.id] = data;
+        io.emit('updated-stats', visitorsData);
+        console.log('stas is updated');
+    });
 
-
+    socket.on('disconnect', function () {
+        delete visitorsData[socket.id];
+        io.emit('updated-stats', visitorsData);
+        console.log('disconnected id: ' + socket.id);
+    });
 });
 
 server.listen(port, ip);

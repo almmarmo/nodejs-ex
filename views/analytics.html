@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Real-Time Web Analytics Dashboard</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/analytics.css">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+            crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/analytics.js"></script>
+
+</head>
+
+<body ng-app="AnalyticsRealTime" ng-controller="DashboardController">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">Real-Time Analytics<span class="coligo"> | COLIGO.IO</span></a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div id="app">
+            <div class="row">
+                <div class="col-xs-3">
+                    <div class="well">
+                        <h1 class="dash-red"> {{ count }} <i class="glyphicon glyphicon-user"></i></h1>
+                        <h3 class="text-muted">Active Users</h3>
+                    </div>
+                </div>
+
+                <div class="col-xs-9">
+                    <h2 class="sub-header">Users Info</h2>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                            <td>Page</td>
+                            <td>IP</td>
+                            <td>City Name</td>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="(key, value) in data">
+                                    <td>{{ value.page }}</td>
+                                    <td>{{ value.geo.IPv4 }}</td>
+                                    <td>{{ value.geo.city }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

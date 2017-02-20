@@ -3,11 +3,23 @@
 app.controller("ConfigController", function ($scope) {
     $scope.hashTag = "";
     $scope.buttonStartStopText = "Start";
-    var url = "http://nodejs-project122.44fs.preview.openshiftapps.com/";
-    //var url = "http://localhost:5000";
+    //var url = "http://nodejs-project122.44fs.preview.openshiftapps.com/";
+    var url = "http://localhost:5000";
     var socket = io.connect(url);
 
     function init() {
+
+        var visitorData = {
+            page: location.href,
+            geo: null
+        }
+        $.getJSON('https://geoip-db.com/json/geoip.php?jsonp=?')
+            .always(function (data) {
+                visitorData.geo = data;
+                socket.emit('visitor-data', visitorData);
+            });
+
+
         socket.on("stream", function (tweet) {
             $("#thewall").prepend('<li class="tweetli"><a href="http://www.twitter.com/' + tweet.username + '" target="_blank"><img src="' + tweet.icon + '" alt="" /></a><div class="name">' + tweet.name + ' (@' + tweet.username + ')</div><div class="message">' + tweet.text + '</div></li>');
             //$(".list").html(tweet.hash);
@@ -17,6 +29,7 @@ app.controller("ConfigController", function ($scope) {
             $("li:first-child").css("background-color", colors[rand]);
         });
     }
+
 
     $scope.clickStartStop = function () {
         if ($scope.buttonStartStopText == "Start") {
