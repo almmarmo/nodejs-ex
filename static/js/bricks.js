@@ -3,8 +3,8 @@
 app.controller("BricksController", function ($scope) {
     $scope.buttonStartStopText = "Stop";
     $scope.hash = '';
-    //var url = "http://nodejs-project122.44fs.preview.openshiftapps.com/";
-    var url = "http://localhost:5000";
+    var url = "http://nodejs-project122.44fs.preview.openshiftapps.com/";
+    //var url = "http://localhost:5000";
     var socket = io.connect(url);
 
     function init() {

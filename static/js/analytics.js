@@ -1,7 +1,8 @@
 ﻿var app = angular.module("AnalyticsRealTime", []);
 
 app.factory('socket', function ($rootScope) {
-    var url = "http://localhost:5000";
+    var url = "http://nodejs-project122.44fs.preview.openshiftapps.com/";
+    //var url = "http://localhost:5000";
     var socket = io.connect(url);
 
     return {
